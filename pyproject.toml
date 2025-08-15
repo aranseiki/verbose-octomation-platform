@@ -1,0 +1,28 @@
+[project]
+name = "verbose-octomation-platform"
+version = "0.1.0"
+description = "Uma plataforma para gerenciar softwares RPA com registros e relatórios detalhados."
+authors = [
+    {name = "Allan de Oliveira Almeida", email = "arumeidaaran@outlook.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+
+[tool.blue]
+line-length = 79
+target-version = "py312"
+exclude = '''
+/(
+    venv|
+    docs
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 79
+skip = ["venv", "docs"]
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = "-p no:warnings"
