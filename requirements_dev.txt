@@ -4,6 +4,7 @@
 # DEV environment
 blue
 isort
+ruff
 
 # Test environment
 pytest
