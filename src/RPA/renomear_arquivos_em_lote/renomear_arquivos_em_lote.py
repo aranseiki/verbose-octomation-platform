@@ -1,20 +1,30 @@
-import sys
 import os
+import sys
 
 CAMINHO_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 if CAMINHO_SRC not in sys.path:
     sys.path.insert(0, CAMINHO_SRC)
 
-from shared import variavel_shared, DIRETORIO_RAIZ
+from datetime import datetime
 
-# from shared.shared_config import
-# config.DIRETORIO_RAIZ
+from shared.shared_config import (
+    DIRETORIO_RPA, criar_estrutura_log, registar_log,
+    registar_log_decorator,
+)
 
-# from utils.logger_utils import registar_log
+nome_automacao = os.path.basename(__file__).removesuffix('.py')
 
-# registar_log(
-#     log_level='DEBUG',
-#     mensagem=f'Iniciando a automação {__name__.removeprefix('.py')}',
-#     cultura='pt_BR.UTF-8',
-#     handler_name='root',
-# )
+caminho_criado = criar_estrutura_log(
+    data_hora=datetime.now(),
+    cultura='pt_BR',
+    diretorio_base=DIRETORIO_RPA,
+)
+
+# breakpoint()
+
+registar_log(
+    log_level='DEBUG',
+    mensagem=f'Iniciando a automação {nome_automacao}',
+    cultura='pt_BR.UTF-8',
+    handler_name='root',
+)
