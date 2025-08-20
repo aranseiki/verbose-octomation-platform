@@ -1,9 +1,17 @@
+import sys
+import os
+
+# garante que src esteja no sys.path mesmo quando executado diretamente
+CAMINHO_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+if CAMINHO_SRC not in sys.path:
+    sys.path.insert(0, CAMINHO_SRC)
+
+from system.config.config_file import DIRETORIO_RAIZ
+
 import logging
 import logging.config
 from datetime import datetime
 from functools import wraps
-
-from config import DIRETORIO_RAIZ
 
 
 def localizar_data_hora(
@@ -121,5 +129,3 @@ def registar_log_decorator(
         return wrapper
 
     return decorator
-
-
