@@ -1,28 +1,17 @@
-import sys
 import os
+import sys
 
 # garante que src esteja no sys.path mesmo quando executado diretamente
 CAMINHO_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 if CAMINHO_SRC not in sys.path:
     sys.path.insert(0, CAMINHO_SRC)
 
-from system.config.config_file import DIRETORIO_RAIZ
-
 import logging
 import logging.config
 from datetime import datetime
 from functools import wraps
 
-
-def localizar_data_hora(
-    datetime: datetime,
-    cultura: str,
-):
-    import locale
-
-    locale.setlocale(locale.LC_TIME, cultura)
-    data_hora_atual = datetime
-    return data_hora_atual.strftime('%c')
+from system.config.config_file import DIRETORIO_RAIZ
 
 
 def definir_log_config(
@@ -78,17 +67,56 @@ def definir_log_config(
     return logging_with_level, extra_log_config
 
 
+def criar_estrutura_log(
+    data_hora: datetime,
+    cultura: str,
+    diretorio_base: str,
+    inverter_data: bool = True,
+):
+    try:
+        from pathlib import Path
+
+        data_atual = localizar_data_hora(data_hora, cultura).split(' ')[0]
+
+        if inverter_data:
+            data_atual = '/'.join(data_atual.split('/')[::-1])
+
+        caminho_criado = Path(diretorio_base / 'logs' / data_atual).mkdir(
+            parents=True, exist_ok=True
+        )
+
+        caminho_criado = True
+    except Exception as erro:
+        caminho_criado = False
+
+    return caminho_criado
+
+
+def localizar_data_hora(
+    datetime: datetime,
+    cultura: str,
+):
+    import locale
+
+    locale.setlocale(locale.LC_TIME, cultura)
+    data_hora_atual = datetime
+    return data_hora_atual.strftime('%c')
+
+
 def registar_log(
     log_level: str,
     mensagem: str,
     cultura: str,
     handler_name: str,
-    arquivo_config: str = f'{DIRETORIO_RAIZ}/logging.ini',
+    arquivo_config: str = None,
 ):
     try:
         erro_logging = None
         logging_with_level = None
         extra = {}
+
+        if not arquivo_config:
+            arquivo_config = f'{DIRETORIO_RAIZ}/system/config/logging.ini'
 
         logging_with_level, extra = definir_log_config(
             log_level,
