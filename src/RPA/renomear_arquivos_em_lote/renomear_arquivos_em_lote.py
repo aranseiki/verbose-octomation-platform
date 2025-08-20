@@ -8,7 +8,9 @@ if CAMINHO_SRC not in sys.path:
 from datetime import datetime
 
 from shared.shared_config import (
-    DIRETORIO_RPA, criar_estrutura_log, registar_log,
+    DIRETORIO_RPA,
+    criar_estrutura_log,
+    registar_log,
     registar_log_decorator,
 )
 
