@@ -1,3 +1,11 @@
-from .logger_utils import registar_log, registar_log_decorator
+from .logger_utils import (
+    localizar_data_hora,
+    registar_log,
+    registar_log_decorator,
+)
 
-__all__ = ['registar_log', 'registar_log_decorator']
+__all__ = [
+    'localizar_data_hora',
+    'registar_log',
+    'registar_log_decorator',
+]
