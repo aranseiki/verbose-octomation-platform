@@ -14,6 +14,11 @@ from system.utils.logger_utils import (
     registar_log,
     registar_log_decorator,
 )
-from system.utils.string_utils import gerar_contador_arquivo, identificar_contador_arquivo, identificar_prefixo_arquivo, identificar_sufixo_arquivo
+from system.utils.string_utils import (
+    gerar_contador_arquivo,
+    identificar_contador_arquivo,
+    identificar_prefixo_arquivo,
+    identificar_sufixo_arquivo,
+)
 
 DIRETORIO_RPA = DIRETORIO_RPA / 'rpa'

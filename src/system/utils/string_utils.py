@@ -1,11 +1,16 @@
-def gerar_contador_arquivo(nome_arquivo: str, separador: str = '_', contador: int = 1, acrescimo: int = 1) -> int:
+def gerar_contador_arquivo(
+    nome_arquivo: str,
+    separador: str = '_',
+    contador: int = 1,
+    acrescimo: int = 1,
+) -> int:
     contador_atual = identificar_contador_arquivo(
-        nome_arquivo = nome_arquivo,
-        separador = separador,
+        nome_arquivo=nome_arquivo,
+        separador=separador,
     )
 
     if str(contador_atual).isdigit():
-        contador = int(contador_atual)+acrescimo
+        contador = int(contador_atual) + acrescimo
 
     return contador
 

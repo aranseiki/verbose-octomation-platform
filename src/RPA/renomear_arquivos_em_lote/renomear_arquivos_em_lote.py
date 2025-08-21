@@ -51,20 +51,17 @@ arquivo_config_rename_rules_json[
 
 diretorioEntrada = arquivo_config_rename_rules_json['diretorioEntrada']
 lista_arquivos = [
-    item
-    for item in Path(
-        diretorioEntrada
-    ).glob('**/*.*')
-    if item.is_file
+    item for item in Path(diretorioEntrada).glob('**/*.*') if item.is_file
 ]
 
-modo_ativo_renomeacao = (
-    arquivo_config_rename_rules_json['renomeacao']['modoAtivo']
-)
+modo_ativo_renomeacao = arquivo_config_rename_rules_json['renomeacao'][
+    'modoAtivo'
+]
 parametro_renomeacao = [
     parametro
-    for parametro
-    in arquivo_config_rename_rules_json['renomeacao']['parametros']
+    for parametro in arquivo_config_rename_rules_json['renomeacao'][
+        'parametros'
+    ]
     if parametro['nome'].upper() == modo_ativo_renomeacao.upper()
 ]
 
@@ -87,7 +84,7 @@ for arquivo in lista_arquivos:
     if modo_ativo_renomeacao.upper() == 'PREFIXO':
         prefixo = str(parametro_renomeacao['valor'])
         prefixo_arquivo = identificar_prefixo_arquivo(
-            nome_arquivo = nome_arquivo,
+            nome_arquivo=nome_arquivo,
             separador='_',
         )
 
@@ -103,7 +100,7 @@ for arquivo in lista_arquivos:
     elif modo_ativo_renomeacao.upper() == 'SUFIXO':
         sufixo = str(parametro_renomeacao['valor'])
         sufixo_arquivo = identificar_sufixo_arquivo(
-            nome_arquivo = nome_arquivo,
+            nome_arquivo=nome_arquivo,
             separador='_',
         )
 
@@ -118,12 +115,12 @@ for arquivo in lista_arquivos:
         novo_nome_arquivo = f'{nome_arquivo}{sufixo}'
     elif modo_ativo_renomeacao.upper() == 'NUMERACAOSEQUENCIAL':
         contador = identificar_contador_arquivo(
-            nome_arquivo = nome_arquivo,
+            nome_arquivo=nome_arquivo,
             separador='_',
         )
 
         novo_contador = gerar_contador_arquivo(
-            nome_arquivo = nome_arquivo,
+            nome_arquivo=nome_arquivo,
             separador='_',
         )
 
@@ -132,10 +129,8 @@ for arquivo in lista_arquivos:
 
         contador = novo_contador
         novo_nome_arquivo = f'{nome_arquivo}_{str(contador)}'
-    
-    arquivo.rename(
-        arquivo.parent / (novo_nome_arquivo + extensao_arquivo)
-    )
+
+    arquivo.rename(arquivo.parent / (novo_nome_arquivo + extensao_arquivo))
 
 registar_log(
     log_level='DEBUG',
