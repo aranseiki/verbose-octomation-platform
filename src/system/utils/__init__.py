@@ -3,9 +3,15 @@ from .logger_utils import (
     registar_log,
     registar_log_decorator,
 )
+from .string_utils import gerar_contador_arquivo, identificar_contador_arquivo, identificar_prefixo_arquivo, identificar_sufixo_arquivo
+
 
 __all__ = [
     'localizar_data_hora',
+    'gerar_contador_arquivo',
+    'identificar_contador_arquivo',
+    'identificar_prefixo_arquivo',
+    'identificar_sufixo_arquivo',
     'registar_log',
     'registar_log_decorator',
 ]
