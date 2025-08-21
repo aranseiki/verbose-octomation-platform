@@ -1,15 +1,15 @@
 {
     "diretorioEntrada": "C:/Users/usuario/Downloads",
     "renomeacao": {
-        "modoAtivo": "prefixo",
+        "modoAtivo": "numeracaoSequencial",
         "parametros": [
             {
                 "nome": "prefixo",
-                "valor": "novo_"
+                "valor": "novo"
             },
             {
                 "nome": "sufixo",
-                "valor": "_2025"
+                "valor": "2025"
             },
             {
                 "nome": "numeracaoSequencial",
