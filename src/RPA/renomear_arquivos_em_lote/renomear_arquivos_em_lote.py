@@ -34,18 +34,19 @@ registar_log(
     handler_name='root',
 )
 
-with open(ARQUIVO_CONFIG_RENAME_RULES, encoding="utf-8") as arquivo_JSON:
+with open(ARQUIVO_CONFIG_RENAME_RULES, encoding='utf-8') as arquivo_JSON:
     arquivo_config_rename_rules_json = load(arquivo_JSON)
 
-# MOCK 
-arquivo_config_rename_rules_json['diretorioEntrada'] = 'C:\\users\\aranseiki\\Downloads'
-# FIM DO MOCK 
+# MOCK
+arquivo_config_rename_rules_json[
+    'diretorioEntrada'
+] = 'C:\\users\\aranseiki\\Downloads'
+# FIM DO MOCK
 
 lista_arquivos = [
-    item 
+    item
     for item in Path(
         arquivo_config_rename_rules_json['diretorioEntrada']
     ).glob('**/*.*')
     if item.is_file
 ]
-
