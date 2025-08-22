@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 def localizar_data_hora(
     datetime: datetime,
     cultura: str,
