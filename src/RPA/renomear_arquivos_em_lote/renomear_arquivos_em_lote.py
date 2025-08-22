@@ -38,7 +38,7 @@ registar_log(
     mensagem=f'Iniciando a automação {NOME_AUTOMACAO}',
     cultura='pt_BR.UTF-8',
     handler_name='root',
-log para     arquivo_log='c:/dev/meu_log2.log'
+    arquivo_log='c:/dev/meu_log2.log'
 )
 
 with open(ARQUIVO_CONFIG_RENAME_RULES, encoding='utf-8') as arquivo_JSON:
