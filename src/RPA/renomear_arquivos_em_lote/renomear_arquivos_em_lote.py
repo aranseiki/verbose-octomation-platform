@@ -38,6 +38,7 @@ registar_log(
     mensagem=f'Iniciando a automação {NOME_AUTOMACAO}',
     cultura='pt_BR.UTF-8',
     handler_name='root',
+log para     arquivo_log='c:/dev/meu_log2.log'
 )
 
 with open(ARQUIVO_CONFIG_RENAME_RULES, encoding='utf-8') as arquivo_JSON:
@@ -75,6 +76,8 @@ if not modo_ativo_renomeacao.upper() in [
     )
 
 parametro_renomeacao = parametro_renomeacao[0]
+prefixo = str(parametro_renomeacao['valor'])
+sufixo = str(parametro_renomeacao['valor'])
 
 for arquivo in lista_arquivos:
     nome_arquivo = arquivo.stem
@@ -82,7 +85,6 @@ for arquivo in lista_arquivos:
     novo_nome_arquivo = ''
 
     if modo_ativo_renomeacao.upper() == 'PREFIXO':
-        prefixo = str(parametro_renomeacao['valor'])
         prefixo_arquivo = identificar_prefixo_arquivo(
             nome_arquivo=nome_arquivo,
             separador='_',
@@ -98,7 +100,6 @@ for arquivo in lista_arquivos:
 
         novo_nome_arquivo = f'{prefixo}{nome_arquivo}'
     elif modo_ativo_renomeacao.upper() == 'SUFIXO':
-        sufixo = str(parametro_renomeacao['valor'])
         sufixo_arquivo = identificar_sufixo_arquivo(
             nome_arquivo=nome_arquivo,
             separador='_',
