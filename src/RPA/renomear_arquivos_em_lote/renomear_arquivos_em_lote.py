@@ -16,6 +16,7 @@ from shared.shared_config import (
     identificar_contador_arquivo,
     identificar_prefixo_arquivo,
     identificar_sufixo_arquivo,
+    localizar_data_hora,
     registar_log,
     registar_log_decorator,
 )
@@ -24,8 +25,25 @@ NOME_AUTOMACAO = os.path.basename(__file__).removesuffix('.py')
 DIRETORIO_PROJETO = DIRETORIO_RPA / NOME_AUTOMACAO
 DIRETORIO_CONFIG = DIRETORIO_PROJETO / 'config'
 ARQUIVO_CONFIG_RENAME_RULES = DIRETORIO_CONFIG / 'rename_rules.json'
-SUFIXO_DUPLICADO = 'dup'
 PREFIXO_DUPLICADO = 'dup'
+SUFIXO_DUPLICADO = 'dup'
+
+DATA_HORA_EXECUCAO = localizar_data_hora(
+    datetime=datetime.now(),
+    cultura='pt_BR',
+)
+DATA_HORA_LOG = (
+    DATA_HORA_EXECUCAO.rpartition(':')[0]
+    .replace('/', '_')
+    .replace(':', '')
+    .replace(' ', '-')
+)
+NOME_ARQUIVO_LOG_PROJETO = f'{NOME_AUTOMACAO}-{DATA_HORA_LOG}.log'
+
+DATA_ATUAL = DATA_HORA_EXECUCAO.split(' ')[0]
+DATA_ATUAL_INVERTIDA = '/'.join(DATA_ATUAL.split('/')[::-1])
+DIRETORIO_LOG = DIRETORIO_PROJETO / 'logs' / DATA_ATUAL_INVERTIDA
+ARQUIVO_LOG_PROJETO = DIRETORIO_LOG / NOME_ARQUIVO_LOG_PROJETO
 
 caminho_criado = criar_estrutura_log(
     data_hora=datetime.now(),
@@ -37,8 +55,8 @@ registar_log(
     log_level='DEBUG',
     mensagem=f'Iniciando a automação {NOME_AUTOMACAO}',
     cultura='pt_BR.UTF-8',
-    handler_name='root',
-    arquivo_log='c:/dev/meu_log2.log'
+    nome_handler='root',
+    arquivo_log=ARQUIVO_LOG_PROJETO,
 )
 
 with open(ARQUIVO_CONFIG_RENAME_RULES, encoding='utf-8') as arquivo_JSON:
@@ -137,5 +155,6 @@ registar_log(
     log_level='DEBUG',
     mensagem=f'Finalizando a automação {NOME_AUTOMACAO}',
     cultura='pt_BR.UTF-8',
-    handler_name='root',
+    nome_handler='root',
+    arquivo_log=ARQUIVO_LOG_PROJETO,
 )

@@ -13,6 +13,7 @@ from functools import wraps
 from pathlib import Path
 
 from system.config.config_file import DIRETORIO_RAIZ
+from system.utils.toolkit import localizar_data_hora
 
 
 def alterar_caminho_arquivo_log(logger: logging.Logger, novo_arquivo):
@@ -23,7 +24,7 @@ def alterar_caminho_arquivo_log(logger: logging.Logger, novo_arquivo):
                 novo_arquivo,
                 mode=handler.mode,
                 encoding=handler.encoding,
-                delay=handler.delay
+                delay=handler.delay,
             )
             # mantém nível, filtros e formatador
             novo_handler.setLevel(handler.level)
@@ -38,11 +39,11 @@ def alterar_caminho_arquivo_log(logger: logging.Logger, novo_arquivo):
 def definir_log_config(
     log_level: str,
     cultura: str,
-    handler_name: str,
+    nome_handler: str,
     arquivo_config: str,
     arquivo_log: str | Path,
 ):
-    if not isinstance(handler_name, str):
+    if not isinstance(nome_handler, str):
         raise ValueError('Você precisa definir um Handler para o log.')
 
     LEVELNAMESMAPPING = list(logging.getLevelNamesMapping().keys())
@@ -53,7 +54,7 @@ def definir_log_config(
         )
 
     logging.config.fileConfig(arquivo_config)
-    logger = logging.getLogger(handler_name)
+    logger = logging.getLogger(nome_handler)
     if log_level.upper() == 'CRITICAL':
         logger.setLevel(logging.CRITICAL)
         logging_with_level = logger.critical
@@ -82,7 +83,11 @@ def definir_log_config(
         raise ValueError('Nìvel não mapeado.')
 
     if arquivo_log is not None:
-        alterar_caminho_arquivo_log(logger, arquivo_log)
+        validacao_alterar_caminho = verificar_alteracao_caminho_log(
+            caminho_arquivo_config=arquivo_config
+        )
+        if validacao_alterar_caminho:
+            alterar_caminho_arquivo_log(logger, arquivo_log)
 
     data_hora_atual = localizar_data_hora(
         datetime=datetime.now(), cultura=cultura
@@ -117,22 +122,11 @@ def criar_estrutura_log(
     return caminho_criado
 
 
-def localizar_data_hora(
-    datetime: datetime,
-    cultura: str,
-):
-    import locale
-
-    locale.setlocale(locale.LC_TIME, cultura)
-    data_hora_atual = datetime
-    return data_hora_atual.strftime('%c')
-
-
 def registar_log(
     log_level: str,
     mensagem: str,
     cultura: str,
-    handler_name: str,
+    nome_handler: str,
     arquivo_config: str = None,
     arquivo_log: str | Path = None,
 ):
@@ -147,7 +141,7 @@ def registar_log(
         logging_with_level, extra = definir_log_config(
             log_level,
             cultura,
-            handler_name,
+            nome_handler,
             arquivo_config,
             arquivo_log=arquivo_log,
         )
@@ -169,14 +163,14 @@ def registar_log_decorator(
     log_level: str,
     mensagem: str,
     cultura: str,
-    handler_name: str,
+    nome_handler: str,
     arquivo_config: str = f'{DIRETORIO_RAIZ}/logging.ini',
 ):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             registar_log(
-                log_level, mensagem, cultura, handler_name, arquivo_config
+                log_level, mensagem, cultura, nome_handler, arquivo_config
             )
             resultado = func(*args, **kwargs)
 
@@ -185,3 +179,35 @@ def registar_log_decorator(
         return wrapper
 
     return decorator
+
+
+def verificar_alteracao_caminho_log(
+    caminho_arquivo_config: str | Path, encoding: str = 'utf-8'
+) -> bool:
+    import ast
+    from configparser import ConfigParser
+
+    retorno_identificador = False
+    Configurador = ConfigParser()
+
+    with open(caminho_arquivo_config, encoding=encoding) as arquivo_config:
+        Configurador.read_file(arquivo_config)
+
+    nomes_handler = (
+        Configurador['logger_root']['handlers'].strip('\'"').split(',')
+    )
+    for nome_handler in nomes_handler:
+        try:
+            nome_handler_session = f'handler_{nome_handler.strip()}'
+            handler_args = Configurador[nome_handler_session]['args']
+            if not len(handler_args.split(',')) == 3:
+                continue
+
+            handler_fileHandler_args = ast.literal_eval(handler_args)
+
+            if handler_fileHandler_args[0].upper() == 'CAMINHO_LOG':
+                retorno_identificador = True
+        except Exception as erro:
+            raise erro
+
+    return retorno_identificador
