@@ -10,8 +10,29 @@ import logging
 import logging.config
 from datetime import datetime
 from functools import wraps
+from pathlib import Path
 
 from system.config.config_file import DIRETORIO_RAIZ
+
+
+def alterar_caminho_arquivo_log(logger: logging.Logger, novo_arquivo):
+    for handler_index, handler in enumerate(logger.handlers):
+        if isinstance(handler, logging.FileHandler):
+            # cria novo handler com mesmo modo, encoding e nível
+            novo_handler = logging.FileHandler(
+                novo_arquivo,
+                mode=handler.mode,
+                encoding=handler.encoding,
+                delay=handler.delay
+            )
+            # mantém nível, filtros e formatador
+            novo_handler.setLevel(handler.level)
+            novo_handler.setFormatter(handler.formatter)
+            for filtro in handler.filters:
+                novo_handler.addFilter(filtro)
+
+            # substitui o antigo pelo novo
+            logger.handlers[handler_index] = novo_handler
 
 
 def definir_log_config(
@@ -19,6 +40,7 @@ def definir_log_config(
     cultura: str,
     handler_name: str,
     arquivo_config: str,
+    arquivo_log: str | Path,
 ):
     if not isinstance(handler_name, str):
         raise ValueError('Você precisa definir um Handler para o log.')
@@ -58,6 +80,9 @@ def definir_log_config(
 
     else:
         raise ValueError('Nìvel não mapeado.')
+
+    if arquivo_log is not None:
+        alterar_caminho_arquivo_log(logger, arquivo_log)
 
     data_hora_atual = localizar_data_hora(
         datetime=datetime.now(), cultura=cultura
@@ -109,6 +134,7 @@ def registar_log(
     cultura: str,
     handler_name: str,
     arquivo_config: str = None,
+    arquivo_log: str | Path = None,
 ):
     try:
         erro_logging = None
@@ -123,9 +149,11 @@ def registar_log(
             cultura,
             handler_name,
             arquivo_config,
+            arquivo_log=arquivo_log,
         )
         logging_with_level(msg=mensagem, extra=extra)
-    except Exception as erro_logging:
+    except Exception as erro:
+        erro_logging = erro
         if (not logging_with_level) or (not extra):
             raise LookupError(
                 'Um erro aconteceu na configuração do log'
