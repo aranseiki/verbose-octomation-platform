@@ -1,16 +1,16 @@
 # Especificação Técnica – Automação de Renomear Arquivos em Lote
 
 ## 1. Descrição
-Este sistema tem como objetivo renomear arquivos de forma automatizada em um diretório específico, aplicando padrões de nomenclatura definidos pelo usuário.  
+Esta automação tem como objetivo renomear arquivos de forma automatizada em um diretório específico, aplicando padrões de nomenclatura definidos pelo usuário.  
 O foco é padronizar nomes de arquivos, manter a integridade das extensões e evitar conflitos de sobrescrita.
 
 ---
 
 ## 2. Escopo
-- O sistema será executado em um diretório fornecido pelo usuário.
+- A automação será executado em um diretório fornecido pelo usuário.
 - Apenas arquivos serão processados; subpastas devem ser ignoradas.
 - A extensão original de cada arquivo deve ser preservada.
-- O sistema deve permitir prefixos, sufixos e numeração sequencial nos nomes dos arquivos.
+- A automação deve permitir prefixos, sufixos e numeração sequencial nos nomes dos arquivos.
 
 ---
 
@@ -25,10 +25,10 @@ O foco é padronizar nomes de arquivos, manter a integridade das extensões e ev
    - **Numeração sequencial**: aplicar numeração incremental preservando a ordem de listagem.  
      Exemplo: `documento.txt` → `documento_1.txt`, `documento_2.txt`
 4. **Preservação da extensão**: a parte após o último ponto (`.`) no nome original deve ser mantida.
-5. **Resolução de conflitos**: se o novo nome já existir no diretório, o sistema deve acrescentar o sufixo `_dup` para evitar sobrescrita.  
+5. **Resolução de conflitos**: se o novo nome já existir no diretório, a automação deve acrescentar o sufixo `_dup` para evitar sobrescrita.  
    Exemplo: `arquivo.txt` → `arquivo_dup.txt`
 6. **Execução atômica**: nenhum arquivo deve ser sobrescrito ou perdido durante o processo.
-7. **Relatório final**: ao término, o sistema deve apresentar:
+7. **Relatório final**: ao término, a automação deve apresentar:
    - Total de arquivos encontrados
    - Total de arquivos renomeados com sucesso
    - Total de conflitos detectados
@@ -54,7 +54,7 @@ O foco é padronizar nomes de arquivos, manter a integridade das extensões e ev
 
 ## 6. Fluxo Simplificado
 1. Usuário informa diretório e modo de renomeação.  
-2. O sistema lista arquivos do diretório.  
+2. A automação lista arquivos do diretório.  
 3. Para cada arquivo:  
    - Aplica regra de renomeação  
    - Verifica conflito  
