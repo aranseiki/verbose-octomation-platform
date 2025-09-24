@@ -35,7 +35,7 @@ def alterar_caminho_arquivo_log(logger: logging.Logger, novo_arquivo):
             # substitui o antigo pelo novo
             logger.handlers[handler_index] = novo_handler
 
-
+ 
 def definir_log_config(
     log_level: str,
     cultura: str,
