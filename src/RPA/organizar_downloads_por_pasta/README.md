@@ -29,7 +29,8 @@ O foco é manter a pasta de entrada limpa e categorizar arquivos de forma práti
 5. **Resolução de conflitos**: se já existir um arquivo com o mesmo nome na pasta destino, a automação adiciona `_dup` ao novo nome.
    - Exemplo: `arquivo.pdf` → `arquivo_dup.pdf`
 6. **Execução atômica**: nenhum arquivo deve ser sobrescrito ou perdido durante o processo.
-7. **Relatório final**: ao término, a automação deve apresentar:
+7. **Registro de logs**: todos os processos devem ser logados em um arquivo de log do dia; apenas um arquivo de log deve ser criado por dia. 
+8. **Relatório final**: ao término, a automação deve apresentar:
    - Total de arquivos encontrados
    - Total de arquivos movidos por categoria
    - Total de conflitos detectados
@@ -42,7 +43,8 @@ O foco é manter a pasta de entrada limpa e categorizar arquivos de forma práti
 - RF03: Criar subpastas para cada categoria de arquivo, se necessário.
 - RF04: Mover arquivos para a subpasta correspondente à sua extensão.
 - RF05: Tratar conflitos de nome com a regra `_dup`.
-- RF06: Gerar relatório de execução.
+- RF06: Registrar log em todas as etapas do processo.  
+- RF07: Gerar relatório de execução.
 
 ---
 
@@ -61,4 +63,5 @@ O foco é manter a pasta de entrada limpa e categorizar arquivos de forma práti
    - Cria pasta destino, se não existir  
    - Verifica conflito de nome  
    - Move o arquivo ou adiciona `_dup`  
-4. Exibe relatório final.
+4. Registrar log em todas as etapas do processo.  
+5. Exibe relatório final.

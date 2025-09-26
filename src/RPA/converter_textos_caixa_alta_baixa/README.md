@@ -7,7 +7,7 @@ Serve para padronização de textos ou preparação de arquivos para processamen
 ---
 
 ## 2. Escopo
-- A automação será executado em um diretório fornecido pelo usuário.  
+- A automação será executada em um diretório fornecido pelo usuário.  
 - Apenas arquivos de texto (`.txt`) serão processados; subpastas serão ignoradas.  
 - A automação deve criar novos arquivos com o conteúdo convertido, preservando os originais.  
 - O usuário deve poder escolher se quer converter para caixa alta ou caixa baixa.
@@ -23,7 +23,8 @@ Serve para padronização de textos ou preparação de arquivos para processamen
 4. **Criação de novos arquivos**: cada arquivo convertido será salvo com um sufixo indicando o tipo de conversão.  
    - Exemplo: `arquivo.txt` → `arquivo_maiusculas.txt` ou `arquivo_minusculas.txt`  
 5. **Execução atômica**: nenhum arquivo original deve ser sobrescrito ou perdido.  
-6. **Relatório final**: ao término, a automação deve apresentar:  
+6. **Registro de logs**: todos os processos devem ser logados em um arquivo de log do dia; apenas um arquivo de log deve ser criado por dia. 
+7. **Relatório final**: ao término, a automação deve apresentar:  
    - Total de arquivos encontrados  
    - Total de arquivos convertidos com sucesso  
 
@@ -34,7 +35,8 @@ Serve para padronização de textos ou preparação de arquivos para processamen
 - RF02: Listar todos os arquivos `.txt` do diretório, ignorando subpastas.  
 - RF03: Aplicar o modo de conversão escolhido pelo usuário (caixa alta ou caixa baixa).  
 - RF04: Criar novos arquivos com o conteúdo convertido, preservando os originais.  
-- RF05: Exibir relatório final de execução.  
+- RF05: Registrar log em todas as etapas do processo.  
+- RF06: Exibir relatório final de execução.  
 
 ---
 
@@ -52,4 +54,5 @@ Serve para padronização de textos ou preparação de arquivos para processamen
    - Lê o conteúdo  
    - Converte para caixa alta ou caixa baixa  
    - Salva em um novo arquivo com sufixo apropriado  
-4. Exibe relatório final com total de arquivos convertidos.
+4. Registrar log em todas as etapas do processo.  
+5. Exibe relatório final com total de arquivos convertidos.

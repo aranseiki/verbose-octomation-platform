@@ -22,7 +22,8 @@ A notificação é sonora (via `winsound` no Windows ou `print('\a')` em sistema
    - Em outros sistemas, utilizar `print('\a')` para sinal sonoro básico.  
 4. **Execução sequencial**: se houver múltiplos temporizadores, cada um deve iniciar após a conclusão do anterior.  
 5. **Interrupção**: o usuário pode cancelar o temporizador a qualquer momento via interrupção de teclado (`Ctrl+C`).  
-6. **Relatório final**: ao término, exibir a duração definida e o status (concluído ou cancelado).
+7. **Registro de logs**: todos os processos devem ser logados em um arquivo de log do dia; apenas um arquivo de log deve ser criado por dia. 
+8. **Relatório final**: ao término, exibir a duração definida e o status (concluído ou cancelado).
 
 ---
 
@@ -32,7 +33,8 @@ A notificação é sonora (via `winsound` no Windows ou `print('\a')` em sistema
 - RF03: Reproduzir notificação sonora ao término do temporizador.  
 - RF04: Permitir execução de múltiplos temporizadores sequenciais.  
 - RF05: Permitir interrupção pelo usuário.  
-- RF06: Exibir relatório final com status e duração definida.
+- RF06: Registrar log em todas as etapas do processo.  
+- RF07: Exibir relatório final com status e duração definida.
 
 ---
 
@@ -50,4 +52,5 @@ A notificação é sonora (via `winsound` no Windows ou `print('\a')` em sistema
    - Emite notificação sonora  
    - Exibe mensagem de conclusão  
 4. Para múltiplos temporizadores, repete o processo para cada um.  
-5. O usuário pode interromper o temporizador a qualquer momento com `Ctrl+C`.
+5. Registrar log em todas as etapas do processo.  
+6. O usuário pode interromper o temporizador a qualquer momento com `Ctrl+C`.

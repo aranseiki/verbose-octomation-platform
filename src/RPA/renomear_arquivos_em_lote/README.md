@@ -28,7 +28,8 @@ O foco é padronizar nomes de arquivos, manter a integridade das extensões e ev
 5. **Resolução de conflitos**: se o novo nome já existir no diretório, a automação deve acrescentar o sufixo `_dup` para evitar sobrescrita.  
    Exemplo: `arquivo.txt` → `arquivo_dup.txt`
 6. **Execução atômica**: nenhum arquivo deve ser sobrescrito ou perdido durante o processo.
-7. **Relatório final**: ao término, a automação deve apresentar:
+7. **Registro de logs**: todos os processos devem ser logados em um arquivo de log do dia; apenas um arquivo de log deve ser criado por dia. 
+8. **Relatório final**: ao término, a automação deve apresentar:
    - Total de arquivos encontrados
    - Total de arquivos renomeados com sucesso
    - Total de conflitos detectados
@@ -41,7 +42,8 @@ O foco é padronizar nomes de arquivos, manter a integridade das extensões e ev
 - RF03: Aplicar o modo de renomeação escolhido pelo usuário.
 - RF04: Garantir preservação da extensão do arquivo.
 - RF05: Tratar conflitos de nome com a regra `_dup`.
-- RF06: Gerar relatório de execução.
+- RF06: Registrar log em todas as etapas do processo.  
+- RF07: Gerar relatório de execução.
 
 ---
 
@@ -59,6 +61,7 @@ O foco é padronizar nomes de arquivos, manter a integridade das extensões e ev
    - Aplica regra de renomeação  
    - Verifica conflito  
    - Renomeia ou adiciona `_dup`  
-4. Exibe relatório final.
+4. Registrar log em todas as etapas do processo.  
+5. Exibe relatório final.
 
 ---

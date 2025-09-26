@@ -21,7 +21,8 @@ O resultado é uma lista organizada de URLs, que pode ser usada para análises o
 4. **Formato do arquivo de saída**: os links devem ser gravados em um arquivo de texto, um link por linha.  
 5. **Remoção de duplicados**: links repetidos não devem ser gravados mais de uma vez.  
 6. **Execução atômica**: nenhum link deve ser perdido ou sobrescrito durante o processo.  
-7. **Relatório final**: ao término, a automação deve apresentar:  
+7. **Registro de logs**: todos os processos devem ser logados em um arquivo de log do dia; apenas um arquivo de log deve ser criado por dia. 
+8. **Relatório final**: ao término, a automação deve apresentar:  
    - Total de links encontrados  
    - Total de links únicos extraídos
 
@@ -32,7 +33,8 @@ O resultado é uma lista organizada de URLs, que pode ser usada para análises o
 - RF02: Extrair todos os valores do atributo `href` de tags `<a>`.  
 - RF03: Gravar os links em um arquivo de saída, um por linha.  
 - RF04: Remover links duplicados do resultado final.  
-- RF05: Exibir relatório final com total de links encontrados e únicos.
+- RF05: Registrar log em todas as etapas do processo.  
+- RF06: Exibir relatório final com total de links encontrados e únicos.
 
 ---
 
@@ -49,4 +51,5 @@ O resultado é uma lista organizada de URLs, que pode ser usada para análises o
 3. Identifica todas as tags `<a>` e captura os valores do atributo `href`.  
 4. Remove links duplicados.  
 5. Grava os links extraídos no arquivo de saída.  
-6. Exibe relatório final com total de links encontrados e únicos.
+6. Registrar log em todas as etapas do processo.  
+7. Exibe relatório final com total de links encontrados e únicos.
